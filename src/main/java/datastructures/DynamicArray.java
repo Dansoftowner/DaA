@@ -68,18 +68,14 @@ public class DynamicArray<T> implements Iterable<T> {
     }
 
     private void shrinkArray(int indexToRemove) {
-        var newArray = new Object[arrayImpl.length - 1];
-        int k = 0;
-        for (int i = 0; i < indexToRemove; i++)
-            newArray[k++] = arrayImpl[i];
-        for (int i = indexToRemove + 1; i < arrayImpl.length; i++)
-            newArray[k++] = arrayImpl[i];
-        arrayImpl = newArray;
+        for (int i = indexToRemove; i < size; i++)
+            arrayImpl[i] = arrayImpl[i + 1];
+        size--;
     }
 
     @Override
     public Iterator<T> iterator() {
-        return new Iterator<T>() {
+        return new Iterator<>() {
             int i = 0;
 
             @Override
