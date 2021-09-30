@@ -30,6 +30,15 @@ public class DynamicArrayTest {
     }
 
     @Test
+    void itShouldInsertAtIndex() {
+        IntStream.rangeClosed(0, 100).forEach(underTest::insert);
+        underTest.insertAt(50, 777);
+
+        assertEquals(50, underTest.indexOf(777));
+        assertEquals(101, underTest.indexOf(100));
+    }
+
+    @Test
     void itShouldNotContainItems() {
         underTest.insert(2);
         underTest.insert(32);

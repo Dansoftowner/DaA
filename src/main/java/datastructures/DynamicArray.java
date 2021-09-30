@@ -23,6 +23,17 @@ public class DynamicArray<T> implements Iterable<T> {
         arrayImpl[size++] = item;
     }
 
+    public void insertAt(int index, T value) {
+        if (index >= size || index < 0)
+            throw new IndexOutOfBoundsException();
+        if (isArrayFull())
+            expandArray();
+        for (int i = size +1; i > index; i--)
+            arrayImpl[i] = arrayImpl[i - 1];
+        arrayImpl[index] = value;
+        size++;
+    }
+
     public void removeAt(int index) {
         if (index >= size || index < 0)
             throw new IndexOutOfBoundsException();
