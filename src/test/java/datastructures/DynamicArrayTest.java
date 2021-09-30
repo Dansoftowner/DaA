@@ -67,10 +67,11 @@ public class DynamicArrayTest {
         underTest.insert(12);
 
         underTest.removeAt(0);
+        underTest.removeAt(1);
 
         assertEquals(-1, underTest.indexOf(1));
         assertEquals(0, underTest.indexOf(3));
-        assertEquals(1, underTest.indexOf(12));
+        assertEquals(-1, underTest.indexOf(12));
     }
 
     @Test
