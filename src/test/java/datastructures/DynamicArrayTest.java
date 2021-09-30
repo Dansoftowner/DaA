@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -14,7 +15,7 @@ public class DynamicArrayTest {
 
     @BeforeEach
     void init() {
-        underTest = new DynamicArray<>();
+        underTest = new DynamicArray<>(0);
     }
 
     @Test
@@ -74,6 +75,9 @@ public class DynamicArrayTest {
 
     @Test
     void itShouldIterateItems() {
+        IntStream.range(0, 100).forEach(underTest::insert);
+        IntStream.range(30, 40).forEach(underTest::removeAt);
+
         List<Integer> copy = new ArrayList<>();
         for (Integer i : underTest)
             copy.add(i);
