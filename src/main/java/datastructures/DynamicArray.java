@@ -4,7 +4,8 @@ import java.util.Iterator;
 
 public class DynamicArray<T> implements Iterable<T> {
 
-    private final int increase;
+    private static final int INCREASE = 2;
+
     private Object[] arrayImpl;
     private int size;
 
@@ -13,19 +14,13 @@ public class DynamicArray<T> implements Iterable<T> {
     }
 
     public DynamicArray(int initialSize) {
-        this(initialSize, 10);
-    }
-
-    public DynamicArray(int initialSize, int increase) {
         this.arrayImpl = new Object[initialSize];
-        this.increase = increase;
     }
 
     public void insert(T item) {
         if (isArrayFull())
             expandArray();
-        arrayImpl[size] = item;
-        size++;
+        arrayImpl[size++] = item;
     }
 
     public void removeAt(int index) {
@@ -66,7 +61,7 @@ public class DynamicArray<T> implements Iterable<T> {
     }
 
     private void expandArray() {
-        var newArray = new Object[arrayImpl.length * increase];
+        var newArray = new Object[Math.max(1, arrayImpl.length) * INCREASE];
         for (int i = 0; i < arrayImpl.length; i++)
             newArray[i] = arrayImpl[i];
         arrayImpl = newArray;
