@@ -48,9 +48,7 @@ public class LinkedList<T> implements Iterable<T> {
         else if (isSingle()) {
             head = tail = null;
         } else {
-            Node beforeTail = head;
-            while (beforeTail.next != tail)
-                beforeTail = beforeTail.next;
+            Node beforeTail = getPreviousNode(tail);
             beforeTail.next = null;
             tail = beforeTail;
         }
@@ -110,6 +108,53 @@ public class LinkedList<T> implements Iterable<T> {
         for (T t : this)
             array[i++] = t;
         return (T[]) array;
+    }
+
+    public void reverse() {
+        if (isEmpty()) return;
+
+        Node previous = head;
+        Node current = head.next;
+        while (current != null) {
+            Node next = current.next;
+            current.next = previous;
+
+            previous = current;
+            current = next;
+        }
+
+        tail = head;
+        head = previous; // previous is the old tail at this point
+        tail.next = null;
+
+        // 1  2 -> 3 -> 4
+        // 1 <- 2 <- 3 <- 4
+
+        /*
+          // O(n^2)
+
+          if (isEmpty()) return;
+          if (isSingle()) return;
+
+          Node oldTail = tail;
+          Node current = getPreviousNode(tail);
+
+          while (current != null) {
+              addLast(current.value);
+              current = getPreviousNode(current);
+          }
+
+           head = oldTail;
+        */
+    }
+
+    private Node getPreviousNode(Node base) {
+        Node current = head;
+        while (current != null) {
+            if (current.next == base) break;
+            current = current.next;
+        }
+        return current;
     }
 
     public int size() {
