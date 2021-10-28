@@ -101,6 +101,47 @@ public class LinkedList<T> implements Iterable<T> {
         return null;
     }
 
+    public T getKthFromTheEnd(int k) {
+        if (isEmpty()) throw new IllegalStateException();
+        if (k < 1) throw new IllegalArgumentException();
+
+        Node current = head;
+        Node last = head;
+
+        for (int i = 0; i < k; i++) {
+            if (last == null) {
+                throw new IllegalArgumentException();
+            }
+            last = last.next;
+        }
+
+        while (last != null) {
+            current = current.next;
+            last = last.next;
+        }
+
+        return current.value;
+
+        /*if (k < 1 || k > size)
+            throw new IllegalArgumentException();
+
+        Node current = head;
+        Node last = head;
+
+        int i = 0;
+        while (last != null) {
+            if (i >= k) {
+                current = current.next;
+            }
+
+            last = last.next;
+
+            i++;
+        }
+
+        return current.value;*/
+    }
+
     @SuppressWarnings("unchecked")
     public T[] toArray() {
         Object[] array = new Object[size];
