@@ -32,6 +32,11 @@ public class Stack<T> implements Iterable<T> {
     }
 
     @Override
+    public String toString() {
+        return backend.toString();
+    }
+
+    @Override
     public Iterator<T> iterator() {
         return backend.iterator();
     }
