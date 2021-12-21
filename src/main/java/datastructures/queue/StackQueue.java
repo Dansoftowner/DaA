@@ -1,4 +1,6 @@
-package datastructures;
+package datastructures.queue;
+
+import datastructures.Stack;
 
 public class StackQueue<T> {
 

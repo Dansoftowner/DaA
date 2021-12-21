@@ -1,4 +1,4 @@
-package datastructures;
+package datastructures.queue;
 
 public class ArrayQueue<T> {
 
