@@ -1,8 +1,5 @@
 package datastructures;
 
-import java.util.Arrays;
-
-
 public class ArrayQueue<T> {
 
     private final Object[] array;
@@ -52,20 +49,13 @@ public class ArrayQueue<T> {
 
     @Override
     public String toString() {
-
-        // [60, null, 30, 40, 50]
-        //   R        F
-
-        /*StringBuilder value = new StringBuilder();
-        for (int i = size, f = front, r = rear-1; i > 0; i--)
-            if (f < array.length)
-                value.append(value.isEmpty() ? "" : ", ").append(array[f++]);
-            else
-                value.append(value.isEmpty() ? "" : ", ").append(array[r++]);
-
-        value.insert(0, "[").append("]");
-        return value.toString();*/
-        return Arrays.toString(array);
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (int i = front; i < (front + size); i++)
+            sb.append(array[i % array.length]).append(", ");
+        if (sb.length() != 1) sb.delete(sb.length() - 2, sb.length());
+        sb.append("]");
+        return sb.toString();
     }
 }
 
