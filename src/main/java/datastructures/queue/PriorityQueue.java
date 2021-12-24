@@ -1,50 +1,55 @@
 package datastructures.queue;
 
+import java.util.Arrays;
+
 public class PriorityQueue<T extends Comparable<T>> {
 
     private final Object[] data;
     private int size;
-    private int rear;
     private int front;
 
     public PriorityQueue(int capacity) {
         data = new Object[capacity];
     }
 
-    public void enqueue(T item) {
-        if (size == data.length)
+    public void enqueue(T offered) {
+        if (isFull())
             throw new IllegalStateException();
-
-        // [1]
-        // [1, 5]
-        //
-
-        int i = rear -1;
-        while(i >= 0 && ((T) data[i]).compareTo(item) > 0) {
-            data[i + 1] = data[i];
-            i--;
-        }
-
-        data[i + 1] = item;
-        rear = (rear + 1) % data.length;
+        data[shiftItemsToInsert(offered)] = offered;
         size++;
     }
 
+    private int shiftItemsToInsert(T offered) {
+        int i;
+        for (i = size - 1; i >= 0; i--) {
+            @SuppressWarnings("unchecked")
+            T element = (T) data[i];
+            if (element.compareTo(offered) < 0)
+                break;
+            else
+                data[i + 1] = data[i];
+        }
+        return i + 1;
+    }
+
     public T dequeue() {
-        var element = data[front];
-        data[front] = null;
-        front = (front + 1) % data.length;
-        size--;
-        return (T) element;
+        if (isEmpty())
+            throw new IllegalStateException();
+        @SuppressWarnings("unchecked")
+        var dequeued = (T) data[front];
+        data[front++] = null;
+        return dequeued;
+    }
+
+    public boolean isEmpty() {
+        return size == 0;
+    }
+
+    private boolean isFull() {
+        return data.length == size;
     }
 
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("[");
-        for (int i = front; i < (front + size); i++)
-            sb.append(data[i % data.length]).append(", ");
-        if (sb.length() != 1) sb.delete(sb.length() - 2, sb.length());
-        sb.append("]");
-        return sb.toString();
+        return Arrays.toString(Arrays.copyOfRange(data, front, size));
     }
 }
