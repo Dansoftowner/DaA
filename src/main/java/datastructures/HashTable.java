@@ -2,8 +2,9 @@ package datastructures;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
-public class HashTable {
+public class HashTable<K, V> {
 
     private final LinkedList<Entry>[] data;
 
@@ -11,33 +12,32 @@ public class HashTable {
         data = new LinkedList[capacity];
     }
 
-    public void put(int key, String value) {
+    public void put(K key, V value) {
         Entry found = findEntry(key);
         if (found != null) found.value = value;
         else addEntry(key, new Entry(key, value));
     }
 
-    public String get(int key) {
+    public V get(K key) {
         Entry found = findEntry(key);
         return found != null ? found.value : null;
     }
 
-    public void remove(int key) {
+    public void remove(K key) {
         LinkedList<Entry> bucket = getBucket(key);
         if (bucket != null) bucket.removeIf(entry -> entry.key == key);
     }
 
-    private Entry findEntry(int key) {
+    private Entry findEntry(K key) {
         LinkedList<Entry> bucket = getBucket(key);
         if (bucket != null)
             for (Entry e : bucket)
-                if (e.key == key) {
+                if (Objects.equals(e.key, key))
                     return e;
-                }
         return null;
     }
 
-    private void addEntry(int key, Entry entry) {
+    private void addEntry(K key, Entry entry) {
         var bucket = getBucket(key);
         if (bucket != null)
             bucket.add(entry);
@@ -45,12 +45,12 @@ public class HashTable {
             data[hash(key)] = new LinkedList<>(List.of(entry));
     }
 
-    private LinkedList<Entry> getBucket(int key) {
+    private LinkedList<Entry> getBucket(K key) {
         return data[hash(key)];
     }
 
-    private int hash(int key) {
-        return Math.abs(key) % data.length;
+    private int hash(K key) {
+        return Math.abs(key.hashCode()) % data.length;
     }
 
     @Override
@@ -64,10 +64,10 @@ public class HashTable {
     }
 
     private class Entry {
-        private int key;
-        private String value;
+        private final K key;
+        private V value;
 
-        Entry(int key, String value) {
+        Entry(K key, V value) {
             this.key = key;
             this.value = value;
         }
