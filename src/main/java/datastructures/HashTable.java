@@ -50,7 +50,7 @@ public class HashTable<K, V> {
     }
 
     private int hash(K key) {
-        return Math.abs(key.hashCode()) % data.length;
+        return Math.abs(Objects.hashCode(key)) % data.length;
     }
 
     @Override
