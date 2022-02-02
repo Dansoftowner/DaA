@@ -63,8 +63,21 @@ public class DynamicArray<T> implements Iterable<T> {
         return (T) arrayImpl[index];
     }
 
+    public void reverse() {
+        for (int i = 0; i < size / 2; i++) {
+            int reflectIndex = getLastIndex() -i;
+            var temp = arrayImpl[i];
+            arrayImpl[i] = arrayImpl[reflectIndex];
+            arrayImpl[reflectIndex] = temp;
+        }
+    }
+
     public int getSize() {
         return size;
+    }
+
+    public int getLastIndex() {
+        return size -1;
     }
 
     private boolean isArrayFull() {
@@ -100,5 +113,14 @@ public class DynamicArray<T> implements Iterable<T> {
                 return (T) arrayImpl[i++];
             }
         };
+    }
+
+    @Override
+    public String toString() {
+        var sb = new StringBuilder();
+        for (T e : this)
+            sb.append(e).append(", ");
+        sb.delete(sb.length() - 2, sb.length());
+        return sb.toString();
     }
 }
