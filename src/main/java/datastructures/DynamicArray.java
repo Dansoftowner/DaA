@@ -28,7 +28,7 @@ public class DynamicArray<T> implements Iterable<T> {
             throw new IndexOutOfBoundsException();
         if (isArrayFull())
             expandArray();
-        for (int i = size +1; i > index; i--)
+        for (int i = size + 1; i > index; i--)
             arrayImpl[i] = arrayImpl[i - 1];
         arrayImpl[index] = value;
         size++;
@@ -65,11 +65,27 @@ public class DynamicArray<T> implements Iterable<T> {
 
     public void reverse() {
         for (int i = 0; i < size / 2; i++) {
-            int reflectIndex = getLastIndex() -i;
+            int reflectIndex = getLastIndex() - i;
             var temp = arrayImpl[i];
             arrayImpl[i] = arrayImpl[reflectIndex];
             arrayImpl[reflectIndex] = temp;
         }
+    }
+
+    public T max() {
+        T expected = null;
+        for (T item : this) {
+            if (item == null)
+                continue;
+
+            if (!(item instanceof Comparable<?>))
+                throw new IllegalStateException();
+            if (expected == null)
+                expected = item;
+            else if (((Comparable<T>) item).compareTo(expected) > 0)
+                expected = item;
+        }
+        return expected;
     }
 
     public int getSize() {
@@ -77,7 +93,7 @@ public class DynamicArray<T> implements Iterable<T> {
     }
 
     public int getLastIndex() {
-        return size -1;
+        return size - 1;
     }
 
     private boolean isArrayFull() {
