@@ -1,6 +1,6 @@
 package datastructures.queue;
 
-import datastructures.LinkedList;
+import datastructures.linkedlist.LinkedList;
 
 public class LinkedListQueue<T> {
 

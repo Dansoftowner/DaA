@@ -1,4 +1,6 @@
-package datastructures;
+package datastructures.linkedlist;
+
+import datastructures.DynamicArray;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
