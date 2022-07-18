@@ -9,30 +9,19 @@ public class BinaryTree<T extends Comparable<T>> {
             root = new Node<>(value);
             return;
         }
+        var parent = findParent(value);
+        if (parent.value.compareTo(value) < 0) parent.rightChild = new Node<>(value);
+        else parent.leftChild = new Node<>(value);
+    }
+
+    private Node<T> findParent(T value) {
         Node<T> current = root;
-        while (current != null) {
-            if (current.value.compareTo(value) < 0)
-                current = insertRight(current, value);
-            else
-                current = insertLeft(current, value);
-        }
-    }
-
-    private Node<T> insertRight(Node<T> base, T value) {
-        if (base.rightChild != null) {
-            return base.rightChild;
-        } else {
-            base.rightChild = new Node<>(value);
-            return null;
-        }
-    }
-
-    private Node<T> insertLeft(Node<T> base, T value) {
-        if (base.leftChild != null) {
-            return base.leftChild;
-        } else {
-            base.leftChild = new Node<>(value);
-            return null;
+        while (true) {
+            int comparison = current.value.compareTo(value);
+            Node<T> next = comparison < 0 ? current.rightChild : current.leftChild;
+            if (next == null)
+                return current;
+            current = next;
         }
     }
 
@@ -50,7 +39,6 @@ public class BinaryTree<T extends Comparable<T>> {
         }
         return false;
     }
-
 
     private static class Node<T> {
 
