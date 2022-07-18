@@ -9,32 +9,31 @@ public class BinaryTree<T extends Comparable<T>> {
             root = new Node<>(value);
             return;
         }
-        var parent = findParent(value);
-        if (parent.value.compareTo(value) < 0) parent.rightChild = new Node<>(value);
-        else parent.leftChild = new Node<>(value);
-    }
-
-    private Node<T> findParent(T value) {
-        Node<T> current = root;
+        var current = root;
         while (true) {
-            int comparison = current.value.compareTo(value);
-            Node<T> next = comparison < 0 ? current.rightChild : current.leftChild;
-            if (next == null)
-                return current;
-            current = next;
+            if (current.value.compareTo(value) < 0) {
+                if (current.rightChild == null) {
+                    current.rightChild = new Node<>(value);
+                    break;
+                }
+                current = current.rightChild;
+            } else {
+                if (current.leftChild == null) {
+                    current.leftChild = new Node<>(value);
+                    break;
+                }
+                current = current.leftChild;
+            }
         }
     }
 
     public boolean contains(T value) {
         Node<T> current = root;
         while (current != null) {
-            if (current.value.equals(value))
-                return true;
-
-            if (current.value.compareTo(value) < 0)
-                current = current.rightChild;
-            else
-                current = current.leftChild;
+            int comparison = current.value.compareTo(value);
+            if (comparison < 0) current = current.rightChild;
+            else if (comparison > 0) current = current.leftChild;
+            else return true;
         }
         return false;
     }
