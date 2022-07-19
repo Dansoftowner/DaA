@@ -1,9 +1,6 @@
 package datastructures.tree;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 public class BinaryTree<T extends Comparable<T>> {
 
@@ -124,6 +121,34 @@ public class BinaryTree<T extends Comparable<T>> {
         return minFast(node.leftChild);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BinaryTree<T> that = (BinaryTree<T>) o;
+        return equalsAll(root, that.root);
+    }
+
+    private boolean equalsAll(Node<T> treeOne, Node<T> treeTwo) {
+        if (isLeaf(treeOne) || isLeaf(treeTwo))
+            return equals(treeOne, treeTwo);
+        if (equals(treeOne, treeTwo))
+            return equalsAll(treeOne.leftChild, treeTwo.leftChild) &&
+                    equalsAll(treeOne.rightChild, treeTwo.rightChild);
+        return false;
+    }
+
+    private boolean equals(Node<T> treeOne, Node<T> treeTwo) {
+        return Objects.equals(treeOne, treeTwo) &&
+                Objects.equals(treeOne.leftChild, treeTwo.leftChild) &&
+                 Objects.equals(treeOne.rightChild, treeTwo.rightChild);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(root);
+    }
+
     private boolean isLeaf(Node<T> node) {
         return node.rightChild == null && node.leftChild == null;
     }
@@ -148,6 +173,14 @@ public class BinaryTree<T extends Comparable<T>> {
             return "Node{" +
                     "value=" + value +
                     '}';
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            Node<?> node = (Node<?>) o;
+            return value.equals(node.value);
         }
     }
 }
