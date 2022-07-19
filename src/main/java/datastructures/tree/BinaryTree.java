@@ -95,6 +95,43 @@ public class BinaryTree<T extends Comparable<T>> {
         return 1 + Math.max(height(base.leftChild), height(base.rightChild));
     }
 
+    /**
+     * O(n)
+     */
+    public T min() {
+        return min(root);
+    }
+
+    private T min(Node<T> base) {
+        if (isLeaf(base))
+            return base.value;
+        T minLeft = min(base.leftChild);
+        T minRight = min(base.rightChild);
+        return min(base.value, min(minLeft, minRight));
+    }
+
+    /**
+     * Only with binary SEARCH trees O(log n)
+     */
+    public T minFast() {
+        if (root == null) throw new IllegalStateException();
+        return minFast(root);
+    }
+
+    private T minFast(Node<T> node) {
+        if (node.leftChild == null)
+            return node.value;
+        return minFast(node.leftChild);
+    }
+
+    private boolean isLeaf(Node<T> node) {
+        return node.rightChild == null && node.leftChild == null;
+    }
+
+    private T min(T o1, T o2) {
+        return o1.compareTo(o2) < 0 ? o1 : o2;
+    }
+
     private static class Node<T> {
 
         Node<T> leftChild;
