@@ -85,25 +85,16 @@ public class BinaryTree<T extends Comparable<T>> {
         }};
     }
 
-
-  /*  public List<T> levelOrder() {
-        return new LinkedList<>(levelOrder(root)) {{ addFirst(root.value); }};
+    public int height() {
+        return height(root);
     }
 
-    private List<T> levelOrder(Node<T> base) {
-        List<T> list = new LinkedList<>();
-        if (base.leftChild != null)
-            list.add(base.leftChild.value);
-        if (base.rightChild != null)
-            list.add(base.rightChild.value);
-
-        if (base.leftChild != null)
-            list.addAll(levelOrder(base.leftChild));
-        if (base.rightChild != null)
-            list.addAll(levelOrder(base.rightChild));
-        return list;
+    private int height(Node<T> base) {
+        if (base == null)
+            return -1;
+        return 1 + Math.max(height(base.leftChild), height(base.rightChild));
     }
-*/
+
     private static class Node<T> {
 
         Node<T> leftChild;
