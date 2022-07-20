@@ -130,18 +130,13 @@ public class BinaryTree<T extends Comparable<T>> {
     }
 
     private boolean equalsAll(Node<T> treeOne, Node<T> treeTwo) {
-        if (isLeaf(treeOne) || isLeaf(treeTwo))
-            return equals(treeOne, treeTwo);
-        if (equals(treeOne, treeTwo))
-            return equalsAll(treeOne.leftChild, treeTwo.leftChild) &&
+        if (treeOne == null && treeTwo == null)
+            return true;
+        if (treeOne != null && treeTwo != null)
+            return treeOne.equals(treeTwo) &&
+                    equalsAll(treeOne.leftChild, treeTwo.leftChild) &&
                     equalsAll(treeOne.rightChild, treeTwo.rightChild);
         return false;
-    }
-
-    private boolean equals(Node<T> treeOne, Node<T> treeTwo) {
-        return Objects.equals(treeOne, treeTwo) &&
-                Objects.equals(treeOne.leftChild, treeTwo.leftChild) &&
-                 Objects.equals(treeOne.rightChild, treeTwo.rightChild);
     }
 
     @Override
