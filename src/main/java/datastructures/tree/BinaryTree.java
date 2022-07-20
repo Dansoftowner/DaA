@@ -1,6 +1,7 @@
 package datastructures.tree;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 public class BinaryTree<T extends Comparable<T>> {
 
@@ -148,6 +149,23 @@ public class BinaryTree<T extends Comparable<T>> {
 
         }
         return true;
+    }
+
+    public List<T> nodesAtKDistance(int dist) {
+        return nodesAtKDistance(root, dist);
+    }
+
+    private List<T> nodesAtKDistance(Node<T> node, int dist) {
+        if (dist == 0)
+            return List.of(node.value);
+        if (node == null)
+            return Collections.emptyList();
+        return Stream.of(
+                nodesAtKDistance(node.leftChild, dist - 1),
+                nodesAtKDistance(node.rightChild, dist - 1)
+                )
+                .flatMap(Collection::stream)
+                .toList();
     }
 
     @Override
