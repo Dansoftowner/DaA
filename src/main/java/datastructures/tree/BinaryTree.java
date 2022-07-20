@@ -121,6 +121,12 @@ public class BinaryTree<T extends Comparable<T>> {
         return minFast(node.leftChild);
     }
 
+    public void swapRoot() {
+        var temp = root.leftChild;
+        root.leftChild = root.rightChild;
+        root.rightChild = temp;
+    }
+
     public boolean isSearchTree() {
         Node<T> previousLeft = root;
         Node<T> previousRight = root;
