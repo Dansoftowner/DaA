@@ -121,6 +121,29 @@ public class BinaryTree<T extends Comparable<T>> {
         return minFast(node.leftChild);
     }
 
+    public boolean isSearchTree() {
+        Node<T> previousLeft = root;
+        Node<T> previousRight = root;
+        Node<T> currentLeft = root.leftChild;
+        Node<T> currentRight = root.rightChild;
+        while (currentLeft != null || currentRight != null) {
+            if (currentLeft != null) {
+                if (currentLeft.value.compareTo(previousLeft.value) > 0)
+                    return false;
+                currentLeft = currentLeft.leftChild;
+                previousLeft = previousLeft.leftChild;
+            }
+            if (currentRight != null) {
+                if (currentRight.value.compareTo(previousRight.value) < 0)
+                    return false;
+                currentRight = currentRight.rightChild;
+                previousRight = previousRight.rightChild;
+            }
+
+        }
+        return true;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
