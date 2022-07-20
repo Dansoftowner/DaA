@@ -104,7 +104,7 @@ public class BinaryTree<T extends Comparable<T>> {
             return base.value;
         T minLeft = min(base.leftChild);
         T minRight = min(base.rightChild);
-        return min(base.value, min(minLeft, minRight));
+        return minNode(base.value, minNode(minLeft, minRight));
     }
 
     /**
@@ -148,7 +148,7 @@ public class BinaryTree<T extends Comparable<T>> {
         return node.rightChild == null && node.leftChild == null;
     }
 
-    private T min(T o1, T o2) {
+    private T minNode(T o1, T o2) {
         return o1.compareTo(o2) < 0 ? o1 : o2;
     }
 
