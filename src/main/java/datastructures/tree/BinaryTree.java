@@ -157,10 +157,10 @@ public class BinaryTree<T extends Comparable<T>> {
     }
 
     private List<T> nodesAtKDistance(Node<T> node, int dist) {
-        if (dist == 0)
-            return List.of(node.value);
         if (node == null)
             return Collections.emptyList();
+        if (dist == 0)
+            return List.of(node.value);
         return Stream.of(
                 nodesAtKDistance(node.leftChild, dist - 1),
                 nodesAtKDistance(node.rightChild, dist - 1)
