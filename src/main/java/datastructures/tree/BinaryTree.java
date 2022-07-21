@@ -54,6 +54,22 @@ public class BinaryTree<T extends Comparable<T>> {
         return contains(node.leftChild, value) || contains(node.rightChild, value);
     }
 
+    public boolean areSiblings(T itemOne, T itemTwo) {
+        return areSiblings(root, itemOne, itemTwo);
+    }
+
+    private boolean areSiblings(Node<T> node, T itemOne, T itemTwo) {
+        if (node == null)
+            return false;
+        if (Objects.equals(node.value, itemOne))
+            return (node.leftChild != null && Objects.equals(node.leftChild.value, itemTwo)) ||
+                    (node.rightChild != null && Objects.equals(node.rightChild.value, itemTwo));
+        if (Objects.equals(node.value, itemTwo))
+            return (node.leftChild != null && Objects.equals(node.leftChild.value, itemOne)) ||
+                    (node.rightChild != null && Objects.equals(node.rightChild.value, itemOne));
+        return areSiblings(node.leftChild, itemOne, itemTwo) || areSiblings(node.rightChild, itemOne, itemTwo);
+    }
+
     public List<T> inOrder() {
         return inOrder(root);
     }
