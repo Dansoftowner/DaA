@@ -198,6 +198,34 @@ public class BinaryTree<T extends Comparable<T>> {
         return countLeaves(node.leftChild) + countLeaves(node.rightChild);
     }
 
+    public T max() {
+        return max(root);
+    }
+
+    private T max(Node<T> node) {
+        if (node == null)
+            return null;
+        if (isLeaf(node))
+            return node.value;
+        T maxLeft = max(node.leftChild);
+        T maxRight = max(node.rightChild);
+        return maxValue(node.value, maxValue(maxLeft, maxRight));
+    }
+
+    public T maxFast() {
+        return maxFast(root);
+    }
+
+    private T maxFast(Node<T> node) {
+        if (node.rightChild == null)
+            return node.value;
+        return maxFast(node.rightChild);
+    }
+
+    private T maxValue(T nodeOne, T nodeTwo) {
+        return nodeOne.compareTo(nodeTwo) > 0 ? nodeOne : nodeTwo;
+    }
+
 
     @Override
     public boolean equals(Object o) {
