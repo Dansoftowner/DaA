@@ -1,6 +1,7 @@
 package datastructures.tree;
 
 import java.util.*;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 public class BinaryTree<T extends Comparable<T>> {
@@ -167,6 +168,14 @@ public class BinaryTree<T extends Comparable<T>> {
                 .flatMap(Collection::stream)
                 .toList();
     }
+
+    public List<T> levelOrder() {
+        return IntStream.rangeClosed(0, height())
+                .mapToObj(this::nodesAtKDistance)
+                .flatMap(Collection::stream)
+                .toList();
+    }
+
 
     @Override
     public boolean equals(Object o) {
