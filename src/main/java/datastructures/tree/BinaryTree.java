@@ -70,6 +70,25 @@ public class BinaryTree<T extends Comparable<T>> {
         return areSiblings(node.leftChild, itemOne, itemTwo) || areSiblings(node.rightChild, itemOne, itemTwo);
     }
 
+    public List<T> getAncestors(T item) {
+        var list = new LinkedList<T>();
+        getAncestors(root, item, list);
+        return list;
+    }
+
+    private boolean getAncestors(Node<T> node, T item, List<T> list) {
+        if (node == null)
+            return false;
+        if (Objects.equals(node.value, item))
+            return true;
+        if (getAncestors(node.leftChild, item, list) || getAncestors(node.rightChild, item, list)) {
+            list.add(node.value);
+            return true;
+        }
+        return false;
+    }
+
+
     public List<T> inOrder() {
         return inOrder(root);
     }
