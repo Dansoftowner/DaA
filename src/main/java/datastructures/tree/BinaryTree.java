@@ -176,6 +176,16 @@ public class BinaryTree<T extends Comparable<T>> {
                 .toList();
     }
 
+    public int size() {
+        return size(root);
+    }
+
+    private int size(Node<T> node) {
+        if (node == null)
+            return 0;
+        return 1 + size(node.leftChild) + size(node.rightChild);
+    }
+
 
     @Override
     public boolean equals(Object o) {
