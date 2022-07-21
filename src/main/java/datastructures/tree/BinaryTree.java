@@ -31,7 +31,7 @@ public class BinaryTree<T extends Comparable<T>> {
         }
     }
 
-    public boolean contains(T value) {
+    public boolean containsFast(T value) {
         Node<T> current = root;
         while (current != null) {
             int comparison = current.value.compareTo(value);
@@ -40,6 +40,18 @@ public class BinaryTree<T extends Comparable<T>> {
             else return true;
         }
         return false;
+    }
+
+    public boolean contains(T value) {
+        return contains(root, value);
+    }
+
+    private boolean contains(Node<T> node, T value) {
+        if (node == null)
+            return false;
+        if (Objects.equals(node.value, value))
+            return true;
+        return contains(node.leftChild, value) || contains(node.rightChild, value);
     }
 
     public List<T> inOrder() {
@@ -162,8 +174,8 @@ public class BinaryTree<T extends Comparable<T>> {
         if (dist == 0)
             return List.of(node.value);
         return Stream.of(
-                nodesAtKDistance(node.leftChild, dist - 1),
-                nodesAtKDistance(node.rightChild, dist - 1)
+                        nodesAtKDistance(node.leftChild, dist - 1),
+                        nodesAtKDistance(node.rightChild, dist - 1)
                 )
                 .flatMap(Collection::stream)
                 .toList();
@@ -225,7 +237,6 @@ public class BinaryTree<T extends Comparable<T>> {
     private T maxValue(T nodeOne, T nodeTwo) {
         return nodeOne.compareTo(nodeTwo) > 0 ? nodeOne : nodeTwo;
     }
-
 
     @Override
     public boolean equals(Object o) {
