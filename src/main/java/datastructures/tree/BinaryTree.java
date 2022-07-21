@@ -186,6 +186,18 @@ public class BinaryTree<T extends Comparable<T>> {
         return 1 + size(node.leftChild) + size(node.rightChild);
     }
 
+    public int countLeaves() {
+        return countLeaves(root);
+    }
+
+    private int countLeaves(Node<T> node) {
+        if (node == null)
+            return 0;
+        if (isLeaf(node))
+            return 1;
+        return countLeaves(node.leftChild) + countLeaves(node.rightChild);
+    }
+
 
     @Override
     public boolean equals(Object o) {
