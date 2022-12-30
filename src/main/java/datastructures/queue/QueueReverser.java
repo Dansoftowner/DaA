@@ -1,8 +1,6 @@
 package datastructures.queue;
 
-import datastructures.Stack;
-
-import java.sql.Array;
+import datastructures.stack.Stack;
 
 
 public class QueueReverser {
