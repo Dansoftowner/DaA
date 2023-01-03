@@ -24,32 +24,32 @@ public class AVLTree {
             root.right = insert(root.right, item);
         else
             root.left = insert(root.left, item);
+
+        root.height = Math.max(height(root.left), height(root.right)) + 1;
+
+        if (isLeftHeavy(root))
+            System.out.printf("%s is left heavy! %n", root.item);
+        else if (isRightHeavy(root))
+            System.out.printf("%s is right heavy! %n", root.item);
+
         return root;
     }
 
-    /*public void insert(int item) {
-        if (isEmpty()) {
-            root = new Node(item);
-            return;
-        }
-        insert(root, item);
+    private int height(Node node) {
+        return node == null ? -1 : node.height;
     }
 
-    private void insert(Node root, int item) {
-        if (root.item < item) {
-            if (root.right == null) {
-                root.right = new Node(item);
-                return;
-            }
-            insert(root.right, item);
-        } else {
-            if (root.left == null) {
-                root.left = new Node(item);
-                return;
-            }
-            insert(root.left, item);
-        }
-    }*/
+    private boolean isLeftHeavy(Node node) {
+        return balanceFactor(node) > 1;
+    }
+
+    private boolean isRightHeavy(Node node) {
+        return balanceFactor(node) < -1;
+    }
+
+    private int balanceFactor(Node node) {
+        return node == null ? 0 : height(node.left) - height(node.right);
+    }
 
     public List<Integer> inOrderTraversal() {
         var list = new ArrayList<Integer>();
@@ -79,6 +79,8 @@ public class AVLTree {
         int item;
         Node left;
         Node right;
+
+        int height;
 
         public Node(int item) {
             this.item = item;
